@@ -29,13 +29,7 @@ const Pokedex = props => (
           <div id="buttontopPicture2" />
         </div>
         <div id="picture">
-          <img
-            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-              props.number
-            }.png`}
-            alt="Welcome Pokedex"
-            height="170"
-          />
+          <img src={props.sprite} alt="Welcome Pokedex" height="170" />
         </div>
         <div id="buttonbottomPicture" />
         <div id="speakers">
@@ -110,7 +104,7 @@ const Pokedex = props => (
 );
 
 Pokedex.propTypes = {
-  number: PropTypes.string,
+  sprite: PropTypes.string,
   name: PropTypes.string,
   types: PropTypes.array,
   height: PropTypes.number,

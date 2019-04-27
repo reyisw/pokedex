@@ -1,7 +1,7 @@
 import React from "react";
-import fetch from "node-fetch";
 
 import Pokedex from "./Pokedex";
+import callApi from "../api/pokemonService";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -10,7 +10,8 @@ class Form extends React.Component {
   state = {
     pokemon: {
       types: [],
-      abilities: []
+      abilities: [],
+      sprites: {}
     },
     search: ""
   };
@@ -19,20 +20,12 @@ class Form extends React.Component {
     this.setState({ search: event.target.value });
   };
 
-  _callApi = () => {
+  _callApi = async () => {
     let self = this;
     let pokemonName = this.state.search;
-    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`, {
-      method: "GET",
-      "Content-Type": "application/x-www-form-urlencoded"
-    })
-      .then(res => res.json())
+    await callApi(pokemonName)
       .then(json => {
-        console.log(json);
-        //self.state.pokemon = json;
         self.setState({ pokemon: json });
-
-        console.log(json);
       })
       .catch(err => {
         alert(`No existe el pokemon: ${pokemonName}`);
@@ -72,7 +65,7 @@ class Form extends React.Component {
           abilities={this.state.pokemon.abilities}
           height={this.state.pokemon.height}
           weight={this.state.pokemon.weight}
-          number={this.state.pokemon.id}
+          sprite={this.state.pokemon.sprites.front_default}
         />
       </Grid>
     );
